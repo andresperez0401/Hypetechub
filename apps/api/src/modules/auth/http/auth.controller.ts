@@ -15,11 +15,16 @@ import { RegisterRequestDto } from '../infrastructure/http/dtos/register.request
 const express = require('express');
 
 const isProduction = process.env.NODE_ENV === 'production';
+// Cross-site cookies (frontend on hypetechub.online, API on *.railway.app) require
+// SameSite=None + Secure so the browser attaches the cookie on cross-origin XHR
+// (e.g. /auth/me). In dev (http://localhost) fall back to lax, which works same-origin.
 const COOKIE_OPTIONS = {
   httpOnly: true,
   secure: isProduction,
-  sameSite: 'lax' as const,
+  sameSite: (isProduction ? 'none' : 'lax') as 'none' | 'lax',
   path: '/',
+  // Only set Domain when explicitly configured AND it matches the API host
+  // (a mismatched Domain attribute causes the browser to silently reject the cookie).
   ...(process.env.COOKIE_DOMAIN ? { domain: process.env.COOKIE_DOMAIN } : {}),
 };
 
@@ -96,8 +101,8 @@ export class AuthController {
   @ApiResponse({ status: 200 })
   logout(@Res({ passthrough: true }) res: unknown): { status: string; message: string } {
     const response = res as { clearCookie: (name: string, opts: Record<string, unknown>) => void };
-    response.clearCookie('access_token', { path: '/' });
-    response.clearCookie('refresh_token', { path: '/' });
+    response.clearCookie('access_token', COOKIE_OPTIONS);
+    response.clearCookie('refresh_token', COOKIE_OPTIONS);
     return { status: 'success', message: 'Logged out successfully.' };
   }
 
