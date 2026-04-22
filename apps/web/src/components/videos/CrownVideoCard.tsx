@@ -25,7 +25,12 @@ export function CrownVideoCard({ video }: CrownVideoCardProps): JSX.Element {
       <div className="relative overflow-hidden rounded-2xl border bg-white border-slate-200 p-1 shadow-sm transition-all duration-300 hover:shadow-md hover:border-indigo-200">
         <div className="relative flex flex-col gap-4 rounded-xl p-4 sm:flex-row sm:items-center sm:p-5">
           <div className="relative w-full overflow-hidden rounded-xl bg-slate-100 sm:w-64 sm:shrink-0">
-            <img src={video.thumbnailUrl} alt={video.title} className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <img
+              src={video.thumbnailUrl}
+              alt={video.title}
+              className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x400?text=Hype+Tech'; }}
+            />
             <div className="absolute left-3 top-3 flex items-center gap-1.5 rounded-md bg-indigo-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">
               Joya de la Corona
             </div>

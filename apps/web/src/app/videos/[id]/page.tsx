@@ -48,7 +48,12 @@ export default function VideoDetailPage(): JSX.Element {
 
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         <div className="relative">
-          <img src={video.thumbnailUrl} alt={video.title} className="aspect-video w-full object-cover bg-slate-100" />
+          <img
+            src={video.thumbnailUrl}
+            alt={video.title}
+            className="aspect-video w-full object-cover bg-slate-100"
+            onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x400?text=Hype+Tech'; }}
+          />
           
           <div className="absolute left-4 top-4 flex flex-col gap-2">
             {isCrown && (

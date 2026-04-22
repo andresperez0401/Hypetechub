@@ -25,7 +25,13 @@ export function VideoCard({ video, index }: VideoCardProps): JSX.Element {
       className="card card-hover group block animate-in"
       style={{ animationDelay: `${index * 60}ms` }}>
       <div className="relative overflow-hidden rounded-t-2xl">
-        <img src={video.thumbnailUrl} alt={video.title} className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+        <img
+          src={video.thumbnailUrl}
+          alt={video.title}
+          className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x400?text=Hype+Tech'; }}
+        />
         
         {/* Favorite Button Overlay */}
         {isAuthenticated && (

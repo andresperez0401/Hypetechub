@@ -20,6 +20,7 @@ COPY --from=builder /app/apps/api/package.json ./apps/api/package.json
 COPY --from=builder /app/apps/api/prisma ./apps/api/prisma
 COPY --from=builder /app/apps/api/prisma.config.ts ./apps/api/prisma.config.ts
 COPY --from=builder /app/apps/api/tsconfig.json ./apps/api/tsconfig.json
+COPY --from=builder /app/apps/api/mock-youtube-api.json ./apps/api/mock-youtube-api.json
 COPY --from=builder /app/node_modules ./node_modules
 WORKDIR /app/apps/api
 EXPOSE 3001

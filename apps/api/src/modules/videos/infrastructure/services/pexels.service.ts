@@ -30,13 +30,21 @@ export class PexelsService {
     }
 
     try {
-      const response = await fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=1&orientation=landscape`, {
-        headers: {
-          Authorization: this.apiKey,
-        },
-      });
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 5000);
+
+      let response: Response;
+      try {
+        response = await fetch(
+          `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=1&orientation=landscape`,
+          { headers: { Authorization: this.apiKey }, signal: controller.signal },
+        );
+      } finally {
+        clearTimeout(timeout);
+      }
 
       if (!response.ok) {
+        this.imageCache.set(query, this.defaultPlaceholder);
         return this.defaultPlaceholder;
       }
 
@@ -49,7 +57,8 @@ export class PexelsService {
 
       this.imageCache.set(query, this.defaultPlaceholder);
       return this.defaultPlaceholder;
-    } catch (error) {
+    } catch {
+      this.imageCache.set(query, this.defaultPlaceholder);
       return this.defaultPlaceholder;
     }
   }
