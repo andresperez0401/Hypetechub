@@ -2,29 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { VideoEntity } from '../../domain/entities/video.entity';
 import { VideosSourcePort } from '../../domain/ports/videos-source.port';
 import { PexelsService } from '../services/pexels.service';
-import mockYouTubeData from '../../../../mock-youtube-api.json';
-
-interface RawYouTubeItem {
-  id: string;
-  snippet: {
-    title: string;
-    channelTitle: string;
-    publishedAt: string;
-    thumbnails: {
-      high: { url: string };
-    };
-  };
-  statistics: {
-    viewCount: string;
-    likeCount: string;
-    commentCount?: string;
-  };
-}
-
-interface RawYouTubeResponse {
-  kind: string;
-  items: RawYouTubeItem[];
-}
+import { MOCK_YOUTUBE_DATA } from './mock-videos.data';
 
 @Injectable()
 export class JsonVideosSourceAdapter implements VideosSourcePort {
@@ -35,7 +13,7 @@ export class JsonVideosSourceAdapter implements VideosSourcePort {
   async getVideos(): Promise<VideoEntity[]> {
     if (this.cachedVideos) return this.cachedVideos;
 
-    const data = mockYouTubeData as RawYouTubeResponse;
+    const data = MOCK_YOUTUBE_DATA;
 
     const videoPromises = data.items.map(async (item) => {
       const hasComments = item.statistics.commentCount !== undefined;
