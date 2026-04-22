@@ -18,11 +18,17 @@ RUN npm run build -w @apps/web
 
 FROM base AS runner
 ENV NODE_ENV=production
-COPY --from=builder /app/apps/web/.next ./.next
-COPY --from=builder /app/apps/web/public ./public
-COPY --from=builder /app/apps/web/next.config.ts ./next.config.ts
-COPY --from=builder /app/apps/web/package.json ./package.json
-COPY --from=deps /app/node_modules ./node_modules
-WORKDIR /app/apps/web
+WORKDIR /app
+# Next.js standalone in monorepo: server.js lives at apps/web/server.js inside standalone/
+COPY --from=builder /app/apps/web/.next/standalone ./
+# Static assets must be at apps/web/.next/static relative to runner root
+COPY --from=builder /app/apps/web/.next/static ./apps/web/.next/static
+# Public assets must be at apps/web/public relative to runner root
+COPY --from=builder /app/apps/web/public ./apps/web/public
 EXPOSE 3000
-CMD ["npm", "start"]
+ENV HOSTNAME="0.0.0.0"
+ENV PORT=3000
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+  CMD wget -qO- http://localhost:3000 || exit 1
+WORKDIR /app/apps/web
+CMD ["node", "server.js"]

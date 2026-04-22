@@ -2,3 +2,16 @@
 > @apps/api@0.1.0 lint
 > eslint "src/**/*.ts"
 
+
+C:\Proyectos\PruebaSundevs\apps\api\src\modules\auth\http\auth.controller.ts
+  14:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-require-imports')
+
+C:\Proyectos\PruebaSundevs\apps\api\src\modules\videos\infrastructure\adapters\json-videos-source.adapter.ts
+  45:47  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+
+C:\Proyectos\PruebaSundevs\apps\api\src\modules\videos\infrastructure\services\pexels.service.ts
+  29:14  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+
+✖ 3 problems (0 errors, 3 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+
