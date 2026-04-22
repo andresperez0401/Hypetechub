@@ -1,26 +1,28 @@
-node_modules
-.pnpm-store
+node_modules/
+.pnpm-store/
 pnpm-lock.yaml
 
 .env
 .env.*
 !.env.example
 
-.next
-dist
-coverage
+.next/
+dist/
+coverage/
 
-apps/*/node_modules
-apps/*/.next
-apps/*/dist
-apps/*/coverage
+apps/*/node_modules/
+apps/*/.next/
+apps/*/dist/
+apps/*/coverage/
 
-.prisma
+.prisma/
+.turbo/
+.turbo/cache/
+
+.claude/
+.codex/
+.github/
+agents/
 
 .DS_Store
 Thumbs.db
-
-.claude
-.agents
-.codex
-
