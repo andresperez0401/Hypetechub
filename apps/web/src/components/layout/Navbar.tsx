@@ -36,6 +36,7 @@ export function Navbar({ pathname, onMobileMenuToggle, isMobileMenuOpen }: Navba
         </nav>
 
         <div className="flex items-center gap-3">
+          {/* Desktop auth */}
           {isAuthenticated ? (
             <div className="hidden items-center gap-2 md:flex">
               <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5">
@@ -49,6 +50,14 @@ export function Navbar({ pathname, onMobileMenuToggle, isMobileMenuOpen }: Navba
           ) : (
             <Link href="/login" className="btn-primary hidden text-xs md:inline-flex">Iniciar sesión</Link>
           )}
+
+          {/* Mobile: user avatar badge (visible when logged in, before opening menu) */}
+          {isAuthenticated && (
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-600 md:hidden">
+              {(user?.displayName ?? user?.email ?? 'U')[0].toUpperCase()}
+            </div>
+          )}
+
           <button type="button" onClick={onMobileMenuToggle} className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 md:hidden" aria-label="Menú">
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
               {isMobileMenuOpen ? <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /> : <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />}
