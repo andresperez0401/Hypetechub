@@ -1,0 +1,29 @@
+[
+  {
+    "id": "yt-1",
+    "title": "How to Build a NestJS Hexagonal Module",
+    "channelName": "Sundevs Channel",
+    "publishedAt": "2026-04-20T10:20:00.000Z",
+    "views": 82000,
+    "likes": 4300,
+    "comments": 620
+  },
+  {
+    "id": "yt-2",
+    "title": "Prisma + Neon in Real Projects",
+    "channelName": "Backend Lab",
+    "publishedAt": "2026-04-18T08:00:00.000Z",
+    "views": 47000,
+    "likes": 3800,
+    "comments": 510
+  },
+  {
+    "id": "yt-3",
+    "title": "Next.js App Router Crash Course",
+    "channelName": "Frontend Forge",
+    "publishedAt": "2026-04-15T12:15:00.000Z",
+    "views": 120000,
+    "likes": 6100,
+    "comments": 980
+  }
+]

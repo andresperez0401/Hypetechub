@@ -1,0 +1,5 @@
+
+> @packages/shared-types@0.1.0 test
+> echo "No tests configured for shared-types"
+
+"No tests configured for shared-types"

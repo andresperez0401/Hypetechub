@@ -1,0 +1,18 @@
+
+> @apps/api@0.1.0 test
+> jest
+
+PASS src/modules/favorites/application/use-cases/__tests__/add-favorite.use-case.spec.ts
+PASS src/modules/favorites/application/use-cases/__tests__/list-favorites.use-case.spec.ts
+PASS src/modules/users/application/use-cases/__tests__/get-my-profile.use-case.spec.ts
+PASS src/modules/videos/application/use-cases/get-videos.use-case.spec.ts
+PASS src/core/http/filters/__tests__/domain-exception.filter.spec.ts
+[33m[Nest] 9320  - [39m22/04/2026, 12:24:13 p.m. [33m   WARN[39m [38;5;3m[DomainExceptionFilter] [39m[33mDomain error [SOME_ERROR]: Something failed[39m
+[33m[Nest] 9320  - [39m22/04/2026, 12:24:13 p.m. [33m   WARN[39m [38;5;3m[DomainExceptionFilter] [39m[33mDomain error [GENERIC]: generic error[39m
+PASS src/modules/videos/http/videos.controller.spec.ts
+
+Test Suites: 6 passed, 6 total
+Tests:       11 passed, 11 total
+Snapshots:   0 total
+Time:        1.698 s, estimated 2 s
+Ran all test suites.

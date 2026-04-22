@@ -1,0 +1,5 @@
+
+> @packages/shared-types@0.1.0 lint
+> echo "No lint configured for shared-types"
+
+"No lint configured for shared-types"
