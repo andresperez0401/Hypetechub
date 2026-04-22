@@ -14,11 +14,13 @@ import { RegisterRequestDto } from '../infrastructure/http/dtos/register.request
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const express = require('express');
 
+const isProduction = process.env.NODE_ENV === 'production';
 const COOKIE_OPTIONS = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
+  secure: isProduction,
   sameSite: 'lax' as const,
   path: '/',
+  ...(process.env.COOKIE_DOMAIN ? { domain: process.env.COOKIE_DOMAIN } : {}),
 };
 
 function getUserFromReq(req: unknown): { userId: string; email: string } | undefined {

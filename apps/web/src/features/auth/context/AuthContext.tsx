@@ -37,6 +37,11 @@ export function AuthProvider({ children }: PropsWithChildren): JSX.Element {
 
   useEffect(() => {
     const initAuth = async () => {
+      const url = new URL(window.location.href);
+      if (url.searchParams.get('auth') === 'success') {
+        url.searchParams.delete('auth');
+        window.history.replaceState({}, '', url.toString());
+      }
       await refreshUser();
       setIsLoading(false);
     };
