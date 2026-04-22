@@ -68,6 +68,17 @@ Plataforma integral construida diseñada para rankear, explorar y chatear con IA
      * Backend (NestJS) en: [http://localhost:3001/api](http://localhost:3001/api)
      * Swagger UI de Backend: [http://localhost:3001/api/docs](http://localhost:3001/api/docs)
 
+## 🐳 Ejecución con Docker (Producción Completa)
+
+El proyecto está completamente **dockerizado**. Puedes levantar toda la orquestación (Frontend + Backend) utilizando los `Dockerfiles.
+
+Para levantarlo, solo debes tener encendido tu motor y ejecutar:
+
+```bash
+docker-compose up --build -d
+```
+Docker leerá silenciosamente `apps/api/.env` para levantar el backend e inyectará los atributos a `apps/web/.env.local` configurándolo para Vercel standalone output routing.
+
 ## 🏢 Estructura de Proyecto (Monorepo)
 * `apps/web`: Frontend Next.js / Tailwind CSS / React. Consume la API. 
 * `apps/api`: Backend NestJS Hexagonal en TypeScript estricto. (Rutas `/api/*`)
