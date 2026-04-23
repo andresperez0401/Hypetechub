@@ -1,11 +1,17 @@
 import type { VideosResponse } from '@/lib/types/videos';
 import { apiClient } from './client';
 
-export async function fetchVideos(): Promise<VideosResponse> {
-  try {
-    const response = await apiClient.get<VideosResponse>('/videos');
-    return response.data;
-  } catch {
-    throw new Error('No se pudieron obtener los videos desde el backend.');
+let _cache: Promise<VideosResponse> | null = null;
+
+export function fetchVideos(): Promise<VideosResponse> {
+  if (!_cache) {
+    _cache = apiClient
+      .get<VideosResponse>('/videos')
+      .then((r) => r.data)
+      .catch((err) => {
+        _cache = null;
+        throw new Error('No se pudieron obtener los videos desde el backend.');
+      });
   }
+  return _cache;
 }

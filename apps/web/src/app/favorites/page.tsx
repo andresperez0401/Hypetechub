@@ -12,7 +12,10 @@ export default function FavoritesPage(): JSX.Element {
   const { data, items, isLoading: videosLoading } = useVideos();
   const { favoriteIds, isLoading: favLoading } = useFavorites();
 
-  if (authLoading || videosLoading || favLoading) {
+  // Block only on auth (must know if user is logged in)
+  // Videos use module cache — usually instant after first load
+  // Favorites load in parallel with auth
+  if (authLoading) {
     return (
       <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <VideoSkeleton count={3} showCrown={false} />

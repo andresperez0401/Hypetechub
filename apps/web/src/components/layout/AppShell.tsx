@@ -3,6 +3,7 @@
 import { type PropsWithChildren, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { AuthProvider } from '@/features/auth/context/AuthContext';
+import { FavoritesProvider } from '@/features/favorites/context/FavoritesContext';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { MobileMenu } from './MobileMenu';
@@ -13,6 +14,7 @@ export function AppShell({ children }: PropsWithChildren): JSX.Element {
 
   return (
     <AuthProvider>
+    <FavoritesProvider>
       <div className="min-h-screen bg-slate-50">
         <Navbar
           pathname={pathname}
@@ -23,6 +25,7 @@ export function AppShell({ children }: PropsWithChildren): JSX.Element {
         <main className="flex-1">{children}</main>
         <Footer />
       </div>
+    </FavoritesProvider>
     </AuthProvider>
   );
 }
