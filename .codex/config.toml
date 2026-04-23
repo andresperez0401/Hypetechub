@@ -1,0 +1,79 @@
+# Codex Configuration
+# Adapter for OpenAI Codex / ChatGPT with code interpreter.
+# Source of truth lives in agents/ — this file adapts that context for Codex.
+
+[project]
+name = "monorepo-videos-challenge"
+type = "professional-monorepo"
+package_manager = "npm workspaces + turborepo"
+
+[stack]
+backend = "NestJS + TypeScript + Prisma + PostgreSQL"
+frontend = "Next.js App Router + TypeScript + Tailwind CSS"
+auth = "JWT (httpOnly cookies) + Google OAuth (Passport) + Cloudflare Turnstile"
+architecture_backend = "hexagonal"
+architecture_frontend = "feature-based components"
+testing_backend = "Jest + supertest"
+testing_frontend = "Jest + React Testing Library"
+docs = "Swagger (OpenAPI)"
+containers = "Docker + Docker Compose"
+
+[agents]
+# All agent definitions live in agents/registry/
+# Read the relevant .md file before working on a task.
+source_of_truth = "agents/"
+orchestrator = "agents/registry/orchestrator.md"
+backend = "agents/registry/backend-architect.md"
+frontend = "agents/registry/frontend-architect.md"
+auth = "agents/registry/auth-engineer.md"
+qa = "agents/registry/qa-reviewer.md"
+devops = "agents/registry/devops-engineer.md"
+docs = "agents/registry/docs-writer.md"
+
+[skills]
+# Read the relevant SKILL.md before implementing a feature
+hexagonal_backend = "agents/skills/hexagonal-backend/SKILL.md"
+nest_bootstrap = "agents/skills/nest-bootstrap/SKILL.md"
+next_bootstrap = "agents/skills/next-bootstrap/SKILL.md"
+auth_implementation = "agents/skills/nest-auth-jwt-google-turnstile/SKILL.md"
+responsive_ui = "agents/skills/next-responsive-ui/SKILL.md"
+swagger_and_testing = "agents/skills/swagger-and-testing/SKILL.md"
+docker = "agents/skills/dockerize-monorepo/SKILL.md"
+release = "agents/skills/release-checklist/SKILL.md"
+
+[contracts]
+# Standards all generated code must satisfy
+done_definition = "agents/contracts/done-definition.md"
+code_standards = "agents/contracts/code-standards.md"
+testing_policy = "agents/contracts/testing-policy.md"
+doc_policy = "agents/contracts/doc-policy.md"
+
+[playbooks]
+# Active workflows — check which phase is active before writing code
+build_agent_os = "agents/playbooks/build-agent-os.md"
+build_mvp = "agents/playbooks/build-mvp-videos-challenge.md"
+add_auth = "agents/playbooks/add-auth-phase2.md"
+dockerize = "agents/playbooks/dockerize-and-deploy.md"
+
+[rules]
+# Non-negotiable constraints for all code generation
+no_any_types = true
+no_console_log_in_production = true
+no_hardcoded_secrets = true
+hexagonal_architecture_mandatory = true
+domain_layer_zero_framework_imports = true
+controllers_delegate_only = true
+dtos_must_use_class_validator = true
+swagger_on_all_public_endpoints = true
+tokens_in_httponly_cookies_only = true
+mobile_first_tailwind_only = true
+conventional_commits = true
+
+[conventions]
+backend_file_naming = "kebab-case"
+frontend_component_naming = "PascalCase"
+frontend_hook_naming = "camelCase with use prefix"
+test_file_suffix = ".spec.ts"
+api_prefix = "/api"
+swagger_path = "/api/docs"
+health_endpoint = "/api/health"

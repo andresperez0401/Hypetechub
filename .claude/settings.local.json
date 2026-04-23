@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(awk '{print $9, $5}')",
+      "Bash(docker compose *)",
+      "Bash(npm audit *)",
+      "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\); const j=JSON.parse\\(d\\); const vulns=j.vulnerabilities; const nextV=vulns['next']; console.log\\('next version:', require\\('./apps/web/node_modules/next/package.json'\\).version\\); const high=Object.entries\\(vulns\\).filter\\(\\([,v]\\)=>v.severity==='high'||v.severity==='critical'\\); console.log\\('high/critical:', high.map\\(\\([k]\\)=>k\\).slice\\(0,10\\)\\)\")",
+      "Bash(node -e \"console.log\\(require\\('./apps/web/node_modules/next/package.json'\\).version\\)\")",
+      "Bash(node -e \"const l=require\\('./package-lock.json'\\); console.log\\('next:', l.packages['apps/web/node_modules/next']?.version || l.packages['node_modules/next']?.version\\)\")"
+    ]
+  }
+}

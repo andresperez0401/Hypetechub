@@ -45,23 +45,69 @@ Organizamos nuestro espacio de trabajo unificado en carpetas claramente separada
 ## 5. Problemas encontrados y cómo los resolviste
 
 * **Problema: Descontrol de Identidad en los Favoritos**
-  * _Desencadenante:_ Al intentar que un visitante guardara videos, no lográbamos mantener de forma sana y a largo plazo ese registro en la base de datos hacia al actor real que presionó el corazón.
-  * _Solución:_ Se diseñaron credenciales herméticas ("Tokens" guardados en cookies encriptadas). Cuando el usuario realiza el login en Google de forma sana, el servidor sella un pase que el cliente entrega internamente siempre que da "favorito". Esto permitió al árbitro asegurar con fiabilidad el guardado individual de forma limpia.
+  * _Desencadenante:_ Al intentar que un visitante guardara videos, no lográbamos mantener de forma sana y a largo plazo ese registro en la base de datos hacia al persona presionó el corazón.
+  * _Solución:_ Se diseñaron credenciales herméticas ("Tokens" guardados en cookies encriptadas dentro de la bd). Cuando el usuario realiza el login en Google de forma sana, el usuario podrá guardar videos en favoritos, alojados dentro de la base d edatos para asegurar la persistencia de la misma.
 
 * **Problema: La Inteligencia Artificial "alucinaba" e inventaba información tecnológica no presente en el inventario real.**
   * _Desencadenante:_ El robot interactivo conversacional solía generar recomendaciones alejadas de los videos verdaderos. 
-  * _Solución:_ Le implementamos una arquitectura que le da lectura fugaz a nuestras tablas reales un cuarto de segundo antes de enviar propiamente la pregunta del visitante a DeepSeek. Eso le otorga límites inquebrantables, restringiéndose únicamente a la plataforma actual y devolviendo información extremadamente veraz de Hype Tech.
-
-* **Problema: Sobrecarga visual al leer el "Hype".**
-  * _Desencadenante:_ Originalmente, la página se proyectaba como un experimento visual que se enfocaba bruscamente en el esquema técnico o en explicar en pantalla gigante como operaba el algoritmo.
-  * _Solución:_ Empujamos contundentemente directrices de Diseño Ubicuo y UI limpia a nivel general del proyecto. Desaparecimos ruido visual, se adaptaron textos más precisos enfocados en el valor (en español), una fuerte paleta luminosa y se insertó un logo identificativo dando finalmente un empaque premium a todas las vistas. 
+  * _Solución:_ Le implementamos una arquitectura que le da lectura fugaz a nuestras tablas reales antes de enviar propiamente la pregunta del visitante a DeepSeek. Eso le otorga límites inquebrantables, restringiéndose únicamente a la plataforma actual y devolviendo información de hype tech.
 
 ---
 
 ## 6. Prompts más relevantes utilizados (Herramientas de IA)
 
-Para ayudar a agilizar desarrollos críticos y validar partes del monolito usando automatizaciones a través de modelos inteligentes (como agente de desarrollo o Copilot), ordenamos fuertemente los "prompts" de la siguiente forma basándonos en enfoque a producto:
+Para ayudar a agilizar desarrollos y poder mantener una estructura clara y ordenada, seguimos un modelo para el diseño de la aplicación utilizando un agente de IA como orquestador a las acciones que debia realizar. Este orquestador era el agente encargado de consultar sus Skills, cada skill funciona como un subagente que trabajará segun el contexto que se le entregue. Permitiendo que no solo la herramienta de IA seleccionada, sea claude, codex, copilot. Tenga claros sus funciones y lo que debe hacer sin alamcenar un contexto en la nube, la skill le da las bases de como puede trabajar. Todo esto se puede ver reflejado en la carpeta /agents.
 
-1. _"Actúa como el orquestador principal del proyecto y corrige la plataforma para que transcriba la arquitectura base y funcione verdaderamente como un producto serio alineándose universalmente a los requerimientos clave, la matemática estricta a favor del hype y las identidades universales."_
-2. _"Aplica un rediseño que baje el ambiente visual a algo inmensamente más sofisticado pero sencillo, amigable, minimalista y menos técnico. Remueve íconos por todos lados. Mantén el branding central de la fuente de los textos estables y sin explicaciones innecesarias sobre nuestro negocio directo en componentes a la vista de público general."_
-3. _"Haz mucho énfasis de que la fórmula Hexagonal que decanta dentro del core de nuestro código base tiene el peso primordial: Todo HypeScore multiplica sí o sí por formato tutorial, si posee 0 visitas equivaldrá irremediablemente en resultado vacío igual a cero y el formateo relacional lo hará nuestra lógica nativa. Nada interactúa sin test general."_
+ Si la desglosamos un poco en su subcarpeta /registries, podemos ver que se encuentra el orquestador con otros roles de agentes que nos ayudaran a mantener la estructura y lo que se arme con las skills pueda tener un sentido de organización y lo mas importante que la solución estuviera alineada a los requerimientos clave. 
+
+### Cómo funciona el sistema en la práctica
+
+El sistema se divide en tres capas que trabajan juntas:
+
+**1. El Orquestador (`agents/registry/orchestrator.md`)**
+Es el punto de entrada de toda instrucción. Cuando llega una tarea, el orquestador la interpreta, decide qué agente debe ejecutarla y en qué orden. No construye nada por sí mismo — coordina. Si la tarea es compleja y tiene múltiples pasos (como construir el MVP completo), activa un **Playbook**. Si es una tarea puntual (como revisar un módulo), activa directamente el agente especializado.
+
+**2. Los Agentes (`agents/registry/`)**
+Cada archivo en esta carpeta representa un rol especializado: `backend-architect`, `frontend-architect`, `auth-engineer`, `devops-engineer`, `qa-reviewer`, `docs-writer`. Cuando el orquestador activa uno, ese agente sabe exactamente qué le corresponde hacer, qué herramientas usar (Skills) y qué no le corresponde tocar. Esto evita que la IA mezcle responsabilidades o tome decisiones fuera de su dominio.
+
+**3. Las Skills (`agents/skills/`)**
+Son el conocimiento ejecutable. Cada skill es una guía detallada de "cómo hacer X correctamente en este proyecto": cómo estructurar un módulo hexagonal, cómo montar auth con JWT y Google OAuth, cómo dockerizar el monorepo, etc. El agente activado consulta la skill correspondiente antes de escribir código, garantizando que la implementación siga los patrones del proyecto y no los patrones genéricos del modelo de lenguaje.
+
+**Playbooks y Contratos**
+Los **Playbooks** (`agents/playbooks/`) definen secuencias de trabajo completas por fases — por ejemplo, el playbook del MVP divide el desarrollo en: scaffold del monorepo → backend hexagonal → frontend → auth → Docker/deploy. Cada fase tiene un agente responsable y una skill asociada.
+
+Los **Contratos** (`agents/contracts/`) son las condiciones de salida: qué significa que algo está "terminado" (`done-definition.md`), cómo se escribe código (`code-standards.md`), cuándo se necesita test (`testing-policy.md`). Ninguna fase se cierra si no cumple su contrato.
+
+**El resultado**: sin importar qué herramienta de IA se use (Claude, Copilot, Codex), el sistema garantiza que opere con el mismo modelo mental del proyecto, aplicando los mismos estándares y tomando decisiones alineadas al producto — no a sus tendencias generales de entrenamiento.
+
+### Ejemplos de prompts utilizados
+
+La forma de comunicarse con el sistema sigue un patrón claro: primero se da contexto de intención, luego se especifica el alcance. El agente consulta su registry y skill correspondiente antes de actuar.
+
+**Arrancar una fase del MVP:**
+> _"Estamos en la Fase 2 del playbook `build-mvp-videos-challenge`. Necesito que el backend-architect implemente el módulo de videos siguiendo arquitectura hexagonal. Consulta la skill `hexagonal-backend` y respeta los contratos de código."_
+
+El orquestador identifica el playbook activo, activa `backend-architect`, y ese agente ejecuta siguiendo `hexagonal-backend/SKILL.md` — no inventa estructura.
+
+---
+
+**Agregar una feature puntual:**
+> _"Agrega el endpoint `GET /favorites` para el usuario autenticado. Solo backend. No toques el frontend."_
+
+El orquestador activa `backend-architect` (no `frontend-architect`), aplica los contratos de testing y Swagger, y cierra solo cuando `done-definition.md` está satisfecho.
+
+---
+
+**Validar antes de hacer commit:**
+> _"Revisa que el módulo de auth cumpla con los contratos del proyecto antes de declararlo terminado."_
+
+El orquestador activa `qa-reviewer`, que cruza el código contra `testing-policy.md`, `code-standards.md` y `done-definition.md`. Si algo no cumple, reporta exactamente qué falta — no aprueba por omisión.
+
+---
+
+**Corregir arquitectura sin perder contexto:**
+> _"El servicio de videos está mezclando lógica de negocio en el controlador. Corrígelo sin romper la interfaz HTTP existente."_
+
+`backend-architect` sabe, por su definición en registry, que los controladores solo deben delegar a casos de uso. Reorganiza la capa de aplicación sin que sea necesario explicarle la arquitectura desde cero.
+
+
