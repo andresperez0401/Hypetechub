@@ -53,20 +53,29 @@ Plataforma integral construida diseñada para rankear, explorar y chatear con IA
    DEFAULT_VIDEO_PLACEHOLDER_URL=https://placehold.co/600x400?text=Hype+Tech+Hub
    ```
 
+   **Importante**
+   - La clave de Pexels se obtiene entrando a su página web y solicitando la api key. Se utilizó esta herramienta ya que las url de la fuente de datos no estaban cargando adecuadamente.
+
+   - La clave de Deepseek Api key, importante teneral para que pueda funcionar el Hype AI. Un agente de IA que permite generar respuestas basadas en el contexto de los videos.
+
+   - Database URL, de igual forma colocarlo ya sea una bd local o remota para poder ejecutar las migraciones con Prisma. En este caso se utilizó Neon, como bd para el proyecto.
+
    **En `apps/web/.env.local`:**
    ```env
    # Conexión al Backend
    NEXT_PUBLIC_API_URL=http://localhost:3001/api
    
 
-3. **Generar Cliente y Ejecutar Migraciones (Base de Datos):**
-   Antes de correr la aplicación, asegúrate de levantar tu esquema en Prisma. Navega al contexto de la API y ejecuta:
+3. **Generar Cliente, Ejecutar Migraciones y Cargar Videos (Base de Datos):**
+   Antes de correr la aplicación, levanta el esquema y carga el catálogo inicial de videos en la base de datos:
    ```bash
    cd apps/api
    npx prisma generate
    npx prisma migrate dev --name init
+   npm run prisma:seed
    cd ../..
    ```
+   El seed es **idempotente**: si ya existen los videos en la BD, los omite sin duplicar. Puedes correrlo cuantas veces quieras sin riesgo.
 
 4. **Ejecutar el proyecto completo (Front y Back simultáneamente):**
    ```bash

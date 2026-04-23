@@ -13,10 +13,11 @@ services:
       - ./apps/api/dev.db:/app/apps/api/dev.db
       - ./apps/api/mock-youtube-api.json:/app/apps/api/mock-youtube-api.json
     healthcheck:
-      test: ['CMD', 'wget', '-qO-', 'http://localhost:3001/api/health']
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      test: ['CMD', 'curl', '-f', 'http://localhost:3001/api/health']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
 
   web:
     build:
