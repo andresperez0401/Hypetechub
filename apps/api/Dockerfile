@@ -15,6 +15,7 @@ RUN npm run build -w @apps/api
 
 FROM base AS runner
 ENV NODE_ENV=production
+RUN apk add --no-cache curl
 COPY --from=builder /app/apps/api/dist ./apps/api/dist
 COPY --from=builder /app/apps/api/package.json ./apps/api/package.json
 COPY --from=builder /app/apps/api/prisma ./apps/api/prisma
@@ -24,6 +25,6 @@ COPY --from=builder /app/apps/api/mock-youtube-api.json ./apps/api/mock-youtube-
 COPY --from=builder /app/node_modules ./node_modules
 WORKDIR /app/apps/api
 EXPOSE 3001
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-  CMD wget -qO- http://localhost:3001/api/health || exit 1
+HEALTHCHECK --interval=10s --timeout=5s --start-period=60s --retries=5 \
+  CMD curl -f http://localhost:3001/api/health || exit 1
 CMD ["sh", "-c", "/app/node_modules/.bin/prisma migrate deploy && node dist/src/main.js"]

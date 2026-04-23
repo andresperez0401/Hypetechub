@@ -34,3 +34,15 @@ model Favorite {
 
   @@unique([userId, videoId])
 }
+
+model Video {
+  id           String   @id
+  title        String
+  channelTitle String
+  publishedAt  DateTime
+  thumbnailUrl String
+  viewCount    Int
+  likeCount    Int
+  commentCount Int?
+  createdAt    DateTime @default(now())
+}

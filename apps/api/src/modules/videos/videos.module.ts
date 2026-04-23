@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { GetVideosUseCase } from './application/use-cases/get-videos.use-case';
 import { VIDEOS_SOURCE_PORT, type VideosSourcePort } from './domain/ports/videos-source.port';
-import { JsonVideosSourceAdapter } from './infrastructure/adapters/json-videos-source.adapter';
+import { PrismaVideosSourceAdapter } from './infrastructure/adapters/prisma-videos-source.adapter';
 import { VideosController } from './http/videos.controller';
 import { PexelsService } from './infrastructure/services/pexels.service';
 import { ConfigModule } from '@nestjs/config';
@@ -12,7 +12,7 @@ import { ConfigModule } from '@nestjs/config';
   providers: [
     {
       provide: VIDEOS_SOURCE_PORT,
-      useClass: JsonVideosSourceAdapter,
+      useClass: PrismaVideosSourceAdapter,
     },
     PexelsService,
     {
