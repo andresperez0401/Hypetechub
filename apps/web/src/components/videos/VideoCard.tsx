@@ -57,11 +57,22 @@ export function VideoCard({ video, index }: VideoCardProps): JSX.Element {
       <div className="flex flex-col gap-1.5 p-4">
         {video.isTutorial && <div className="text-[10px] font-semibold text-emerald-600 uppercase tracking-wider">Tutorial</div>}
         <h3 className="line-clamp-2 text-sm font-medium leading-snug text-slate-800 group-hover:text-indigo-600 transition-colors">{video.title}</h3>
-        <p className="text-xs text-slate-500">{video.channelName}</p>
-        <div className="mt-1 flex items-center gap-3 text-xs text-slate-400">
-          <span>{formatNumber(video.views)} vistas</span>
-          <span>·</span>
-          <span>{video.relativePublishedAt}</span>
+        <p className="text-xs text-slate-500">{video.channelName} · {video.relativePublishedAt}</p>
+        <div className="mt-2 flex items-center gap-3 text-xs text-slate-500">
+          <span className="flex flex-col">
+            <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold">Vistas</span>
+            <span className="font-medium text-slate-700">{formatNumber(video.views)}</span>
+          </span>
+          <span className="h-5 w-px bg-slate-200" />
+          <span className="flex flex-col">
+            <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold">Likes</span>
+            <span className="font-medium text-slate-700">{formatNumber(video.likes)}</span>
+          </span>
+          <span className="h-5 w-px bg-slate-200" />
+          <span className="flex flex-col">
+            <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold">Comentarios</span>
+            <span className="font-medium text-slate-700">{video.commentsDisabled ? 'N/D' : formatNumber(video.comments)}</span>
+          </span>
         </div>
       </div>
     </Link>

@@ -7,12 +7,13 @@ import { VideoCard } from './VideoCard';
 import { VideoSkeleton } from './VideoSkeleton';
 import type { VideoItem } from '@/lib/types/videos';
 
-type SortKey = 'hypeScore' | 'views' | 'likes';
+type SortKey = 'hypeScore' | 'views' | 'likes' | 'comments';
 
 const SORT_OPTIONS: { key: SortKey; label: string }[] = [
   { key: 'hypeScore', label: 'Puntuación' },
   { key: 'views', label: 'Vistas' },
   { key: 'likes', label: 'Likes' },
+  { key: 'comments', label: 'Comentarios' },
 ];
 
 function sortVideos(videos: VideoItem[], key: SortKey): VideoItem[] {
@@ -90,17 +91,17 @@ export function VideosSection(): JSX.Element {
         </div>
 
         {/* Sort buttons */}
-        <div className="flex items-center gap-1.5">
-          <span className="text-xs font-medium text-slate-400 mr-1">Ordenar:</span>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs font-medium text-slate-400">Ordenar:</span>
           {SORT_OPTIONS.map(opt => (
             <button
               key={opt.key}
               type="button"
               onClick={() => setSortKey(opt.key)}
-              className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+              className={`min-h-[36px] min-w-[44px] rounded-xl px-3.5 py-2 text-xs font-semibold transition-colors touch-manipulation select-none ${
                 sortKey === opt.key
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-white border border-slate-200 text-slate-500 hover:border-indigo-300 hover:text-indigo-600'
+                  ? 'bg-indigo-600 text-white shadow-sm'
+                  : 'bg-white border border-slate-200 text-slate-600 active:bg-slate-50'
               }`}
             >
               {opt.label}
