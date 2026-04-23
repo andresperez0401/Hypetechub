@@ -1,6 +1,15 @@
+# Despliegue
+
+Como parte de mejorar la experiencia de uso de la app, se desplegó con una url publica para que se pueda acceder a probarla:
+
+https://www.hypetechub.online/
+
+api: https://api.hypetechub.online/api
+
+
 # Hype Tech Hub
 
-Plataforma integral construida diseñada para rankear, explorar y chatear con IA sobre un catálogo de contenido y tutoriales de desarrollo de software. Este repositorio contiene el Frontend y Backend productizado como un Monorepo manejado por Turborepo.
+Plataforma integral construida diseñada para rankear, explorar y chatear con IA sobre un catálogo de contenido y tutoriales calificando el nivel de HYPE. También se puede iniciar sesión con Google para guardar videos en favoritos.
 
 > Este proyecto fue desarrollado basándose en requerimientos técnicos orientados a medir el "Hype" (engagement en proporción a las vistas) integrando IA y un stack full modern tech en TypeScript.
 
