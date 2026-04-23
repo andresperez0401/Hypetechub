@@ -7,6 +7,7 @@ import { FavoritesProvider } from '@/features/favorites/context/FavoritesContext
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { MobileMenu } from './MobileMenu';
+import { HypeAIWidget } from './HypeAIWidget';
 
 export function AppShell({ children }: PropsWithChildren): JSX.Element {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -24,6 +25,7 @@ export function AppShell({ children }: PropsWithChildren): JSX.Element {
         <MobileMenu isOpen={isMobileMenuOpen} pathname={pathname} onClose={() => setIsMobileMenuOpen(false)} />
         <main className="flex-1">{children}</main>
         <Footer />
+        <HypeAIWidget />
       </div>
     </FavoritesProvider>
     </AuthProvider>
