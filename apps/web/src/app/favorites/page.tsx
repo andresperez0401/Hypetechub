@@ -9,7 +9,7 @@ import { VideoSkeleton } from '@/components/videos/VideoSkeleton';
 
 export default function FavoritesPage(): JSX.Element {
   const { isAuthenticated, isLoading: authLoading } = useAuthContext();
-  const { data, isLoading: videosLoading } = useVideos();
+  const { data, items, isLoading: videosLoading } = useVideos();
   const { favoriteIds, isLoading: favLoading } = useFavorites();
 
   if (authLoading || videosLoading || favLoading) {
@@ -36,9 +36,8 @@ export default function FavoritesPage(): JSX.Element {
     );
   }
 
-  const all = [...(data?.items ?? [])];
-  if (data?.featured) all.unshift(data.featured);
-  const favoriteVideos = all.filter(v => favoriteIds.has(v.id));
+  const allVideos = data?.featured ? [data.featured, ...items] : items;
+  const favoriteVideos = allVideos.filter(v => favoriteIds.has(v.id));
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">

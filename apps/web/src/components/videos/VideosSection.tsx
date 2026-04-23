@@ -1,12 +1,41 @@
 'use client';
 
+import { useMemo, useState } from 'react';
 import { useVideos } from '@/hooks/useVideos';
 import { CrownVideoCard } from './CrownVideoCard';
 import { VideoCard } from './VideoCard';
 import { VideoSkeleton } from './VideoSkeleton';
+import type { VideoItem } from '@/lib/types/videos';
+
+type SortKey = 'hypeScore' | 'views' | 'likes';
+
+const SORT_OPTIONS: { key: SortKey; label: string }[] = [
+  { key: 'hypeScore', label: 'Puntuación' },
+  { key: 'views', label: 'Vistas' },
+  { key: 'likes', label: 'Likes' },
+];
+
+function sortVideos(videos: VideoItem[], key: SortKey): VideoItem[] {
+  return [...videos].sort((a, b) => b[key] - a[key]);
+}
+
+function filterVideos(videos: VideoItem[], query: string): VideoItem[] {
+  if (!query.trim()) return videos;
+  const q = query.toLowerCase();
+  return videos.filter(
+    v => v.title.toLowerCase().includes(q) || v.channelName.toLowerCase().includes(q),
+  );
+}
 
 export function VideosSection(): JSX.Element {
   const { items, featured, isLoading, error } = useVideos();
+  const [sortKey, setSortKey] = useState<SortKey>('hypeScore');
+  const [query, setQuery] = useState('');
+
+  const processedItems = useMemo(
+    () => sortVideos(filterVideos(items, query), sortKey),
+    [items, query, sortKey],
+  );
 
   if (isLoading) return <VideoSkeleton />;
 
@@ -31,11 +60,68 @@ export function VideosSection(): JSX.Element {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {featured && <CrownVideoCard video={featured} />}
-      {items.length > 0 && (
+
+      {/* Filters bar */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        {/* Search */}
+        <div className="relative w-full sm:max-w-xs">
+          <svg className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
+          </svg>
+          <input
+            type="text"
+            placeholder="Buscar por título o canal..."
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            className="w-full rounded-xl border border-slate-200 bg-white py-2 pl-9 pr-4 text-sm text-slate-700 placeholder-slate-400 outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+          />
+          {query && (
+            <button
+              type="button"
+              onClick={() => setQuery('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              aria-label="Limpiar búsqueda"
+            >
+              ✕
+            </button>
+          )}
+        </div>
+
+        {/* Sort buttons */}
+        <div className="flex items-center gap-1.5">
+          <span className="text-xs font-medium text-slate-400 mr-1">Ordenar:</span>
+          {SORT_OPTIONS.map(opt => (
+            <button
+              key={opt.key}
+              type="button"
+              onClick={() => setSortKey(opt.key)}
+              className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+                sortKey === opt.key
+                  ? 'bg-indigo-600 text-white'
+                  : 'bg-white border border-slate-200 text-slate-500 hover:border-indigo-300 hover:text-indigo-600'
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Results */}
+      {processedItems.length === 0 ? (
+        <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center">
+          <span className="text-4xl">🔍</span>
+          <h3 className="mt-3 font-semibold text-slate-700">Sin resultados para &ldquo;{query}&rdquo;</h3>
+          <p className="mt-1 text-sm text-slate-400">Prueba con otro título o nombre de canal.</p>
+          <button type="button" onClick={() => setQuery('')} className="btn-secondary mt-4 text-sm">Limpiar búsqueda</button>
+        </div>
+      ) : (
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((video, i) => <VideoCard key={video.id} video={video} index={i} />)}
+          {processedItems.map((video, i) => (
+            <VideoCard key={video.id} video={video} index={i} />
+          ))}
         </div>
       )}
     </div>
