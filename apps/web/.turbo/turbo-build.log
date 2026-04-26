@@ -6,8 +6,12 @@
    - Environments: .env.local
 
    Creating an optimized production build ...
- ✓ Compiled successfully in 6.2s
+ ✓ Compiled successfully in 3.3s
    Linting and checking validity of types ...
+
+./src/app/favorites/page.tsx
+12:35  Warning: 'videosLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+13:35  Warning: 'favLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
 
 ./src/app/hype-ai/page.tsx
 55:11  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
@@ -24,6 +28,9 @@
 ./src/components/layout/Footer.tsx
 9:13  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
 
+./src/components/layout/HypeAIWidget.tsx
+67:13  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
 ./src/components/layout/Navbar.tsx
 22:11  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
 
@@ -37,6 +44,13 @@
 8:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
 23:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
 
+./src/features/favorites/context/FavoritesContext.tsx
+57:7  Warning: Expected an assignment or function call and instead saw an expression.  @typescript-eslint/no-unused-expressions
+70:9  Warning: Expected an assignment or function call and instead saw an expression.  @typescript-eslint/no-unused-expressions
+
+./src/lib/api/videos.api.ts
+11:15  Warning: 'err' is defined but never used.  @typescript-eslint/no-unused-vars
+
 info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
    Collecting page data ...
    Generating static pages (0/9) ...
@@ -48,14 +62,14 @@ info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/d
    Collecting build traces ...
 
 Route (app)                                 Size  First Load JS
-┌ ○ /                                    1.63 kB         132 kB
+┌ ○ /                                    3.64 kB         133 kB
 ├ ○ /_not-found                            989 B         103 kB
-├ ○ /favorites                           3.36 kB         130 kB
+├ ○ /favorites                           1.01 kB         131 kB
 ├ ○ /hype-ai                             2.06 kB         125 kB
-├ ○ /login                               2.36 kB         129 kB
-├ ○ /register                            2.45 kB         129 kB
-├ ○ /videos                                466 B         131 kB
-└ ƒ /videos/[id]                          3.1 kB         130 kB
+├ ○ /login                               2.43 kB         129 kB
+├ ○ /register                            2.53 kB         129 kB
+├ ○ /videos                              2.74 kB         133 kB
+└ ƒ /videos/[id]                         3.32 kB         130 kB
 + First Load JS shared by all             102 kB
   ├ chunks/18-2d765459f0cd2fba.js          46 kB
   ├ chunks/87c73c54-24122e7b92478d00.js  54.2 kB
